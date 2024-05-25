@@ -11,11 +11,6 @@
     name: "{{ username }}"
     shell: /bin/zsh
 
-- name: Touch .zshrc
-  ansible.builtin.file:
-    path: "/home/{{ username }}/.zshrc"
-    state: touch
-
 - name: Enable project atim/starship
   become: true
   community.general.copr:

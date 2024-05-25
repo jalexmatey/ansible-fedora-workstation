@@ -52,20 +52,8 @@
     dest: "/home/{{ username }}/.zsh/zsh-syntax-highlighting"
 
 - name: Update .zshrc file
-  ansible.builtin.lineinfile:
-    path: "/home/{{ username }}/.zshrc"
-    line: |
-      eval "$(starship init zsh)"
-      source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-      source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-      
-      # History file for zsh
-      HISTFILE=~/.zsh_history
-
-      # How many commands to store in history
-      HISTSIZE=10000
-      SAVEHIST=10000
-
-      # Share history in every terminal session
-      setopt SHARE_HISTORY
-    state: present
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/templates/.zshrc.j2"
+    dest: "/home/{{ username }}/.zshrc"
+    owner: "{{ username }}"
+    mode: '0744'

@@ -1,0 +1,71 @@
+---
+- name: Ensure zsh is installed
+  become: true
+  ansible.builtin.package:
+    name: zsh
+    state: present
+
+- name: Change user's shell to zsh
+  become: true
+  ansible.builtin.user:
+    name: "{{ username }}"
+    shell: /bin/zsh
+
+- name: Touch .zshrc
+  ansible.builtin.file:
+    path: "/home/{{ username }}/.zshrc"
+    state: touch
+
+- name: Enable project atim/starship
+  become: true
+  community.general.copr:
+    host: copr.fedorainfracloud.org
+    state: enabled
+    name: atim/starship
+
+- name: Install starship
+  become: true
+  ansible.builtin.package:
+    name: starship
+    state: present
+
+- name: Add eval command for starship to .zshrc
+  ansible.builtin.lineinfile:
+    path: "/home/{{ username }}/.zshrc"
+    line: eval "$(starship init zsh)"
+    state: present
+
+- name: Create .zsh directory
+  ansible.builtin.file:
+    path: "/home/{{ username }}/.zsh"
+    state: directory
+    mode: '0755'
+
+- name: Clone zsh-autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "/home/{{ username }}/.zsh/zsh-autosuggestions"
+
+- name: Clone zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "/home/{{ username }}/.zsh/zsh-syntax-highlighting"
+
+- name: Update .zshrc file
+  ansible.builtin.lineinfile:
+    path: "/home/{{ username }}/.zshrc"
+    line: |
+      eval "$(starship init zsh)"
+      source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+      source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+      
+      # History file for zsh
+      HISTFILE=~/.zsh_history
+
+      # How many commands to store in history
+      HISTSIZE=10000
+      SAVEHIST=10000
+
+      # Share history in every terminal session
+      setopt SHARE_HISTORY
+    state: present

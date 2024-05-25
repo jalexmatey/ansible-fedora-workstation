@@ -1,0 +1,9 @@
+---
+username: jalex
+packages:
+  - ansible-lint
+  - rsync
+  - steam
+  - nodejs
+  - zsh
+  - cascadia-code-nf-fonts

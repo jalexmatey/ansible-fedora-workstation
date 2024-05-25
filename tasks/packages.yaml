@@ -1,0 +1,12 @@
+---
+- name: Install dnf packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install aicommits
+  community.general.npm:
+    name: aicommits
+    global: true
+    state: present

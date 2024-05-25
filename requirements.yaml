@@ -1,0 +1,11 @@
+---
+collections:
+  - name: community.general
+
+roles:
+  - name: robertdebock.update
+    version: "3.1.9" # as of 2024/05/25
+  - name: gantsign.visual-studio-code
+    version: "7.0.0" # as of 2024/05/25
+  - name: darkwizard242.googlechrome
+    version: "3.0.0" # as of 2024/05/25

@@ -2,8 +2,11 @@
 username: jalex
 packages:
   - ansible-lint
+  - cascadia-code-nf-fonts
+  - dnf-automatic
+  - gnome-tweaks
+  - nodejs
+  - pavucontrol
   - rsync
   - steam
-  - nodejs
   - zsh
-  - cascadia-code-nf-fonts

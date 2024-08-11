@@ -10,3 +10,8 @@
     name: aicommits
     global: true
     state: present
+
+- name: Install PyCharm Community flatpak
+  community.general.flatpak:
+    name: com.jetbrains.PyCharm-Community
+    state: present
